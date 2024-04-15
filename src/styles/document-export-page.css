@@ -26,7 +26,7 @@
   padding-top: 0;
 }
 
-.h5p-document-export-page .export-error-message > ul:first-child {
+.h5p-document-export-page .export-error-message>ul:first-child {
   margin-top: 0.5em;
 }
 
@@ -51,8 +51,9 @@
   padding-bottom: 0;
 }
 
-.textfields-output > p {
-  min-height: 1px; /* Include margins for empty p tags */
+.textfields-output>p {
+  min-height: 1px;
+  /* Include margins for empty p tags */
 }
 
 /* ------------------------------ popup main container ---------------------- */
@@ -238,4 +239,11 @@
 
 .joubel-create-document.responsive.no-title .joubel-exportable-header-text {
   display: none;
+}
+
+
+@media only screen and (max-device-width: 1180px) {
+  .joubel-exportable-export-button {
+    display: none;
+  }
 }

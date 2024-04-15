@@ -1,5 +1,6 @@
 import { saveAs } from "file-saver";
 import { HeadingLevel, Paragraph, Document, TextRun, Packer } from "docx";
+import { isMobile } from "react-device-detect";
 
 /**
  * Class responsible for creating an export page
@@ -163,7 +164,10 @@ H5P.DocumentExportPage.ExportPage = (function ($, EventDispatcher) {
   ExportPage.prototype.initExportButton = function () {
     var self = this;
     // Export document button event
-
+    // Quick and Dirty solution for disabling document exports on mobile devices
+    if (isMobile) {
+      return;
+    }
     self.$exportButton.on("click", function () {
       self.saveText();
     });
