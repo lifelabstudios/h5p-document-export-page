@@ -240,10 +240,3 @@
 .joubel-create-document.responsive.no-title .joubel-exportable-header-text {
   display: none;
 }
-
-
-@media only screen and (max-device-width: 1180px) {
-  .joubel-exportable-export-button {
-    display: none;
-  }
-}
