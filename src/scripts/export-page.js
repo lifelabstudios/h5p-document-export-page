@@ -1,5 +1,6 @@
 import { saveAs } from "file-saver";
 import { HeadingLevel, Paragraph, Document, TextRun, Packer } from "docx";
+import { UAParser } from "ua-parser-js";
 
 /**
  * Class responsible for creating an export page
@@ -20,6 +21,8 @@ H5P.DocumentExportPage.ExportPage = (function ($, EventDispatcher) {
 
     self.templateContent = templateContent;
     self.header = header;
+    const parser = new UAParser();
+    self.isMobile = ["mobile", "tablet"].includes(parser.getDevice().type);
 
     // Standard labels:
     var standardSelectAllTextLabel = selectAllTextLabel || "Select";
@@ -28,6 +31,17 @@ H5P.DocumentExportPage.ExportPage = (function ($, EventDispatcher) {
     var announceExportPageTextLabel = "You are on the export page";
     self.standardSubmitSuccessTextLabel =
       submitSuccessTextLabel || "Your report was submitted successfully!";
+
+    const exportButton = self.isMobile
+      ? ""
+      : "     </button>" +
+        '     <button class="joubel-exportable-export-button" title="' +
+        standardExportTextLabel +
+        '" tabindex="1">' +
+        "       <span>" +
+        standardExportTextLabel +
+        "</span>" +
+        "     </button>";
 
     var exportPageTemplate =
       '<div class="joubel-create-document" role="dialog" title="' +
@@ -47,14 +61,7 @@ H5P.DocumentExportPage.ExportPage = (function ($, EventDispatcher) {
       "       <span>" +
       standardSelectAllTextLabel +
       "</span>" +
-      "     </button>" +
-      '     <button class="joubel-exportable-export-button" title="' +
-      standardExportTextLabel +
-      '" tabindex="1">' +
-      "       <span>" +
-      standardExportTextLabel +
-      "</span>" +
-      "     </button>" +
+      exportButton +
       "   </div>" +
       " </div>" +
       ' <div class="joubel-exportable-body">' +
@@ -163,6 +170,10 @@ H5P.DocumentExportPage.ExportPage = (function ($, EventDispatcher) {
   ExportPage.prototype.initExportButton = function () {
     var self = this;
     // Export document button event
+    // Quick and Dirty solution for disabling document exports on mobile devices
+    if (self.isMobile) {
+      return;
+    }
 
     self.$exportButton.on("click", function () {
       self.saveText();
